@@ -5,17 +5,36 @@ import { Link } from "react-router-dom";
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getVideos();
   }, []);
 
   const getVideos = async () => {
-    const data = await fetch(YOUTUBE_VIDEO_API);
-    const json = await data.json();
-    // console.log(json.items);
-    setVideos(json.items);
+    try {
+      const response = await fetch(YOUTUBE_VIDEO_API);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const json = await response.json();
+
+      if (json.items && Array.isArray(json.items)) {
+        setVideos(json.items);
+      } else {
+        console.error("API did not return expected data format.");
+      }
+    } catch (error) {
+      console.error("Failed to fetch videos:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;  // Show a loading indicator until the data is loaded
+  }
 
   return (
     <div className="flex flex-wrap">
