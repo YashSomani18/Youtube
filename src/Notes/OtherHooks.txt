@@ -1,0 +1,63 @@
+useMemo
+
+it is like if we are using two different usestate like finding a prime number and toggling bw
+dark and light theme 
+
+let's say we just toggling theme the findPrime is again re-rendered. for the number as big as 7 digits 
+take time to calculate like in heavy operations it will decrease the UX.
+
+such type of problems can be solved by memoization by (useMemo)
+
+const cacheValue = useMemo(calculateValue , dependencies)
+it returns a value it takes a function in calculateValue and dependencies tells you about when you
+not need to cache it
+Here you cache the result of a calculation
+so for our prime number we use it like
+const prime = useMemo(()=> findPrime(text)  [text]);
+
+so when the text changes the function findPrime is called otherwise we use the cached value
+
+----------------------------------------------------------------
+
+useCallback
+
+similar to useMemo but it caches a function definition bw re-renders
+
+const cachedfn = useCallback(fn , dependencies);
+
+
+------------------------------------------------------------------
+
+useRef
+I WANT A VARIABLE WHICH SHOULD NOT GET RESET WHEN MY RE-RENDER HAPPENS BUT IT HOLDS THAT VALUE STILL REACT SHOULD TRACK IT
+
+const ref = useRef(initialValue)
+in the ref when we console it takes it as an object and take the value to the current
+this is what we see when we console log it
+{
+    current: initialValue;
+}
+
+
+let's say we are having 3 VARIABLEs
+1) normal (x)
+2) ref variable (ref)
+3) State variable (y)
+
+
+normal variable is like when we re-renders the page it get the initial value again
+so let say we are having x =0 
+and in the app we increase it to 1 -> 2-> 3
+and then re-renders the page it again becomes the zero and while we change x to 1 2 3 we are not rendering it 
+so it doesnot change in the UI
+let x=0;
+
+
+for the ref variable ref=0
+we increase it to 1 2 3 
+and then re-renders the page now the UI gets updated and from previous value which was 0 now it shows 3 and it remembers it
+and it doesnot re-renders on its own but once re-rendered it remembers it previous value which makes it different from normal variable
+
+for state variable , we all know we use useState hook and it re-renders the page each time it is getting changed
+
+ 
