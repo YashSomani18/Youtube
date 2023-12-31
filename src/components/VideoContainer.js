@@ -33,7 +33,7 @@ const VideoContainer = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;  // Show a loading indicator until the data is loaded
+    return <div>Loading...</div>;  
   }
 
   return (
